@@ -686,6 +686,7 @@ int gpt_utils_set_xbl_boot_partition(enum boot_chain chain)
         fprintf(stderr, "%s: setting %s lun as boot lun\n",
                         __func__,
                         boot_dev);
+#ifndef _BSG_FRAMEWORK_KERNEL_HEADERS
         if (get_scsi_node_from_bootdevice(boot_dev,
                                 sg_dev_node,
                                 sizeof(sg_dev_node))) {
@@ -693,6 +694,7 @@ int gpt_utils_set_xbl_boot_partition(enum boot_chain chain)
                                 __func__);
                 goto error;
         }
+#endif
         /* set boot lun using /dev/sg or /dev/ufs-bsg* */
         if (set_boot_lun(sg_dev_node, boot_lun_id)) {
                 fprintf(stderr, "%s: Failed to set xblbak as boot partition\n",
